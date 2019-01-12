@@ -13,6 +13,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.example.timothyyirenkyi.journalapp.Data.JournalDatabase;
+import com.example.timothyyirenkyi.journalapp.Data.JournalEntry;
+import com.example.timothyyirenkyi.journalapp.Data.MainViewModel;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements JournalAdapter.ListItemClickListener{

@@ -13,6 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.timothyyirenkyi.journalapp.Data.AddEntryViewModel;
+import com.example.timothyyirenkyi.journalapp.Data.AddEntryViewModelFactory;
+import com.example.timothyyirenkyi.journalapp.Data.JournalDatabase;
+import com.example.timothyyirenkyi.journalapp.Data.JournalEntry;
+
 import java.util.Date;
 
 public class AddEntryActivity extends AppCompatActivity {
