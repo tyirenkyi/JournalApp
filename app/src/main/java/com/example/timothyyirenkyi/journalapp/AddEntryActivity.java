@@ -6,21 +6,31 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
-
 import com.example.timothyyirenkyi.journalapp.Data.AddEntryViewModel;
 import com.example.timothyyirenkyi.journalapp.Data.AddEntryViewModelFactory;
 import com.example.timothyyirenkyi.journalapp.Data.JournalDatabase;
 import com.example.timothyyirenkyi.journalapp.Data.JournalEntry;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddEntryActivity extends AppCompatActivity {
+
+    // Date formatter
+    private SimpleDateFormat dateFormat;
+    private SimpleDateFormat dateFormat2;
+    // Constant for date format
+    private static final String DATE_FORMAT = "MMM, hh:mm a";
+
+    private static final String DATE_FORMAT1 = "MM dd, yyyy";
 
     // Extra for the task ID to be received in the intent
     public static final String EXTRA_TASK_ID = "extraTaskId";
@@ -30,7 +40,6 @@ public class AddEntryActivity extends AppCompatActivity {
     private static final int DEFAULT_TASK_ID = -1;
     EditText titleEditText;
     EditText descEditText;
-    FloatingActionButton saveButton;
 
     private int mEntryId = DEFAULT_TASK_ID;
 
@@ -40,7 +49,10 @@ public class AddEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_entry);
 
+        dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
         initViews();
+
+        dateFormat2 = new SimpleDateFormat(DATE_FORMAT1, Locale.getDefault());
 
         journalDatabase = JournalDatabase.getsInstance(getApplicationContext());
 
@@ -74,17 +86,33 @@ public class AddEntryActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                onSaveButtonClicked();
+                return true;
+            default:
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
     public void initViews() {
         titleEditText = findViewById(R.id.title_editText);
         descEditText = findViewById(R.id.desc_editText);
-        saveButton = findViewById(R.id.floatingActionButton);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Date date = new Date();
+        String dateNow = dateFormat.format(date);
+        getSupportActionBar().setTitle(dateNow);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSaveButtonClicked();
-            }
-        });
     }
 
     private void populateUI(JournalEntry journalEntry) {
@@ -99,8 +127,9 @@ public class AddEntryActivity extends AppCompatActivity {
         String description = descEditText.getText().toString();
         String title = titleEditText.getText().toString();
         Date date = new Date();
+        String simpleDate = dateFormat2.format(date);
 
-        final JournalEntry journalEntry = new JournalEntry(description, title, date);
+        final JournalEntry journalEntry = new JournalEntry(description, title, date, simpleDate);
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">JournalApp</string>
+    <string name="save_entry">save_button</string>
+    <string name="entry_body">Write here</string>
+    <string name="entry_title">Title</string>
+    <string name="toolbar_title">I\'m Rick Williams bitch</string>
+    <string name="empty_view">No Journal Entry</string>
+    <string name="search_hint"><![CDATA[Search <your journal>]]></string>
+    <string name="search_title">Search</string>
+    <string name="calendar_nav">calendar_nav</string>
 </resources>

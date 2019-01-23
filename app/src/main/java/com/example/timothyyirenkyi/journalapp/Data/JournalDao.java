@@ -27,4 +27,7 @@ public interface JournalDao {
 
     @Query("SELECT * FROM journal WHERE id = :id")
     LiveData<JournalEntry> loadEntryById(int id);
+
+    @Query("SELECT * FROM journal WHERE simpleDate = :simpleDate")
+    LiveData<List<JournalEntry>> loadEntryBySimpleDate(String simpleDate);
 }

@@ -4,8 +4,6 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
-import com.example.timothyyirenkyi.journalapp.Data.AddEntryViewModel;
-import com.example.timothyyirenkyi.journalapp.Data.JournalDatabase;
 
 public class AddEntryViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private final JournalDatabase database;

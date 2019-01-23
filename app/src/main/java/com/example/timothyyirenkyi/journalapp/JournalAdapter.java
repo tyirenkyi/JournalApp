@@ -17,7 +17,7 @@ import java.util.Locale;
 public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalViewHolder> {
 
     // Constant for date format
-    private static final String DATE_FORMAT = "dd/mm/yyy";
+    private static final String DATE_FORMAT = "MMM dd, yyyy.EEE";
 
     private Context mContext;
 
