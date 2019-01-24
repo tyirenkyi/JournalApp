@@ -3,6 +3,7 @@ package com.example.timothyyirenkyi.journalapp.Data;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.net.Uri;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,21 +19,24 @@ public class JournalEntry {
     private String title;
     private Date updatedAt;
     private String simpleDate;
+    private Uri imageUri;
 
     @Ignore
-    public JournalEntry(String description, String title, Date updatedAt, String simpleDate) {
+    public JournalEntry(String description, String title, Date updatedAt, String simpleDate, Uri imageUri) {
         this.description = description;
         this.title = title;
         this.updatedAt = updatedAt;
         this.simpleDate = simpleDate;
+        this.imageUri = imageUri;
     }
 
-    public JournalEntry(int id, String description, String title, Date updatedAt, String simpleDate) {
+    public JournalEntry(int id, String description, String title, Date updatedAt, String simpleDate, Uri imageUri) {
         this.id = id;
         this.description = description;
         this.title = title;
         this.updatedAt = updatedAt;
         this.simpleDate = simpleDate;
+        this.imageUri = imageUri;
     }
 
     public String getTitle() {
@@ -73,5 +77,13 @@ public class JournalEntry {
 
     public String getSimpleDate() {
         return simpleDate;
+    }
+
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
     }
 }

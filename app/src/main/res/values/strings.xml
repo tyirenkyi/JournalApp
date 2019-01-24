@@ -8,4 +8,7 @@
     <string name="search_hint"><![CDATA[Search <your journal>]]></string>
     <string name="search_title">Search</string>
     <string name="calendar_nav">calendar_nav</string>
+    <string name="calendar_fragment">Calendar</string>
+    <string name="media_fragment">Media</string>
+    <string name="main_activity">Journal</string>
 </resources>

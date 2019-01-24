@@ -1,29 +1,30 @@
-package com.example.timothyyirenkyi.journalapp;
+package com.example.timothyyirenkyi.journalapp.Fragments;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.TextView;
-
+import android.widget.TextView;import com.example.timothyyirenkyi.journalapp.AddEntryActivity;
+import com.example.timothyyirenkyi.journalapp.CalendarAdapter;
 import com.example.timothyyirenkyi.journalapp.Data.CalendarViewModel;
 import com.example.timothyyirenkyi.journalapp.Data.CalendarViewModelFactory;
 import com.example.timothyyirenkyi.journalapp.Data.JournalDatabase;
 import com.example.timothyyirenkyi.journalapp.Data.JournalEntry;
-import com.example.timothyyirenkyi.journalapp.Data.MainViewModel;
+import com.example.timothyyirenkyi.journalapp.R;
 
 import java.util.List;
 
-public class CalendarActivity extends AppCompatActivity implements CalendarAdapter.ListItemClickListener{
+public class CalendarFragment extends Fragment implements CalendarAdapter.ListItemClickListener{
 
     CalendarView calendarView;
 
@@ -32,23 +33,26 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     JournalDatabase database;
     TextView emptyView;
 
+    public static CalendarFragment newInstance() {
+        return new CalendarFragment();
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+        calendarView = view.findViewById(R.id.calendar);
 
-        calendarView = findViewById(R.id.calendar);
+        recyclerView = view.findViewById(R.id.calendar_list);
 
-        recyclerView = findViewById(R.id.calendar_list);
+        calendarAdapter = new CalendarAdapter(getContext(), this);
 
-        calendarAdapter = new CalendarAdapter(this, this);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(calendarAdapter);
 
-        emptyView = findViewById(R.id.empty_view);
+        emptyView = view.findViewById(R.id.empty_view);
 
         emptyView.setVisibility(View.GONE);
 
@@ -58,8 +62,8 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
                 String trueMonth;
                 switch (month) {
                     case 0:
-                       trueMonth = "01";
-                       break;
+                        trueMonth = "01";
+                        break;
                     case 1:
                         trueMonth = "02";
                         break;
@@ -103,14 +107,14 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
                 date.append(", ");
                 date.append(String.valueOf(year));
 
-                database = JournalDatabase.getsInstance(getApplicationContext());
+                database = JournalDatabase.getsInstance(getContext());
 
                 String dateId = String.valueOf(date);
 
                 CalendarViewModelFactory factory = new CalendarViewModelFactory(database, dateId);
-                final CalendarViewModel viewModel = ViewModelProviders.of(CalendarActivity.this, factory).get(CalendarViewModel.class);
+                final CalendarViewModel viewModel = ViewModelProviders.of(CalendarFragment.this, factory).get(CalendarViewModel.class);
                 viewModel.getCalendarList(database, dateId);
-                viewModel.getJournal().observe(CalendarActivity.this, new Observer<List<JournalEntry>>() {
+                viewModel.getJournal().observe(getViewLifecycleOwner(), new Observer<List<JournalEntry>>() {
                     @Override
                     public void onChanged(@Nullable List<JournalEntry> journalEntries) {
                         Log.v("CalendarActivity", "dop");
@@ -128,12 +132,13 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
                 });
             }
         });
+        return view;
     }
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
         // Launch AddEntryActivity adding the itemId as an extra in the intent
-        Intent intent = new Intent(CalendarActivity.this, AddEntryActivity.class);
+        Intent intent = new Intent(getContext(), AddEntryActivity.class);
         intent.putExtra(AddEntryActivity.EXTRA_TASK_ID, clickedItemIndex);
         startActivity(intent);
     }
