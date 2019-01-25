@@ -1,33 +1,16 @@
 package com.example.timothyyirenkyi.journalapp;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import com.example.timothyyirenkyi.journalapp.Data.JournalDatabase;
-import com.example.timothyyirenkyi.journalapp.Data.JournalEntry;
-import com.example.timothyyirenkyi.journalapp.Data.MainViewModel;
 import com.example.timothyyirenkyi.journalapp.Fragments.CalendarFragment;
 import com.example.timothyyirenkyi.journalapp.Fragments.MainFragment;
 import com.example.timothyyirenkyi.journalapp.Fragments.MediaFragment;
 
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     MainFragment mainFragment;

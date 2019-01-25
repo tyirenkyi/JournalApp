@@ -1,4 +1,4 @@
-package com.example.timothyyirenkyi.journalapp;
+package com.example.timothyyirenkyi.journalapp.Data;
 
 import android.arch.persistence.room.TypeConverter;
 
