@@ -31,6 +31,7 @@ dependencies {
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
 
+    implementation 'com.android.support:support-v4:28.0.0'
     annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
 
     // Test helpers for LiveData

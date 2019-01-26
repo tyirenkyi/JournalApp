@@ -70,7 +70,7 @@ public class MediaFragment extends Fragment implements MediaAdapter.ListItemClic
         adapter = new MediaAdapter(getContext(), this);
 
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
         emptyView = view.findViewById(R.id.empty_view);
