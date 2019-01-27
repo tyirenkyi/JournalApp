@@ -85,4 +85,71 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="pref_title_font">Font Family</string>
+    <string name="pref_font_raleway">Raleway</string>
+    <string name="pref_font_roboto">Roboto</string>
+    <string name="pref_font_noto_serif">Noto-serif</string>
+    <string name="pref_font_work_sans">Work Sans</string>
+    <string name="pref_font_nunito">Nunito</string>
+
+
+    <string name="pref_title_font_size">Font size</string>
+    <string name="pref_font_small">Small</string>
+    <string name="pref_font_medium">Medium</string>
+    <string name="pref_font_large">Large</string>
+    <string name="pref_font_extra_large">Extra Large</string>
+
+
+    <string name="pref_title_time_format">Time format</string>
+    <string name="pref_time_format_default">Default</string>
+    <string name="pref_time_format_24_hour">24-hour format</string>
+    <string name="pref_time_format_12_hour">12-hour format</string>
+    <string name="journal_settings">Journal Settings</string>
+    <string name="font_list_key">font_list</string>
+    <string name="font_size_list_key">font_size_list</string>
+    <string name="time_format_key">time_format_list</string>
+
+
+    <string-array name="list_preference_font">
+        <item>Raleway</item>
+        <item>Nunito</item>
+        <item>Roboto</item>
+        <item>Work Sans</item>
+        <item>Noto Serif</item>
+    </string-array>
+
+    <string-array name="list_preference_font_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="list_preference_font_size">
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>extra large</item>
+    </string-array>
+    
+    <string-array name="list_preference_font_size_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    
+    <string-array name="list_preference_time_formats">
+        <item>Default</item>
+        <item>12-hour format</item>
+        <item>24-hour format</item>
+    </string-array>
+
+    <string-array name="list_preference_time_formats_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>

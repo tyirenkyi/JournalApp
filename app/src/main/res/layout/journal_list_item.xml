@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
                 android:textSize="16sp"
-                android:typeface="monospace"
+                android:fontFamily="@assets/font/roboto"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="This is the title field" />
@@ -42,14 +42,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="monospace"
+                android:fontFamily=""
                 android:maxLines="10"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/journal_item_title"
                 app:layout_constraintVertical_bias="0.141"
-                tools:text="I did alot today, maybe I might get some icecream, to celebrate." />
+                tools:text="I did a lot today, maybe I might get some ice cream, to celebrate." />
 
             <TextView
                 android:id="@+id/journal_item_time"
@@ -58,7 +58,7 @@
                 android:layout_height="23dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:fontFamily="monospace"
+                android:fontFamily="@assets/font/roboto"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/journal_item_desc"

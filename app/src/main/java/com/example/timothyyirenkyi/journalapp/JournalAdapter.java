@@ -1,8 +1,12 @@
 package com.example.timothyyirenkyi.journalapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 import com.example.timothyyirenkyi.journalapp.Data.JournalEntry;
 
 import java.text.SimpleDateFormat;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,6 +33,9 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
 
     final private ListItemClickListener mOnClickListener;
 
+    SharedPreferences.OnSharedPreferenceChangeListener prefListener;
+
+
     public interface ListItemClickListener {
         void onListItemClick(int clickedItemIndex);
     }
@@ -37,6 +45,7 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
         mContext = context;
         mOnClickListener = listener;
     }
+
 
 
     @NonNull
@@ -54,12 +63,59 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull JournalViewHolder journalViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final JournalViewHolder journalViewHolder, int i) {
         // Determine the values of the wanted data
         JournalEntry journalEntry = mJournalEntries.get(i);
         String description = journalEntry.getDescription();
         String title = journalEntry.getTitle();
         String updatedAt = dateFormat.format(journalEntry.getUpdatedAt());
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+        prefListener =
+                new SharedPreferences.OnSharedPreferenceChangeListener() {
+                    @Override
+                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                        Log.v("JournalAdapter", s);
+                        String fontFamilyListPref = sharedPreferences.getString("font_list", "1");
+                        Typeface typeface;
+                        final JournalViewHolder mJournalViewHolder = journalViewHolder;
+                        switch (fontFamilyListPref) {
+                            case "1":
+                                typeface = Typeface.createFromAsset(mContext.getAssets(), "font/raleway.ttf");
+                                mJournalViewHolder.entryDesc.setTypeface(typeface);
+                                mJournalViewHolder.entryTitle.setTypeface(typeface);
+                                mJournalViewHolder.entryTime.setTypeface(typeface);
+                                Log.v("JournalAdapter", "raleway");
+                                break;
+                            case "2":
+                                typeface = Typeface.createFromAsset(mContext.getAssets(), "font/nunito.ttf");
+                                mJournalViewHolder.entryDesc.setTypeface(typeface);
+                                mJournalViewHolder.entryTitle.setTypeface(typeface);
+                                mJournalViewHolder.entryTime.setTypeface(typeface);
+                                break;
+                            case "3":
+                                typeface = Typeface.createFromAsset(mContext.getAssets(), "font/roboto.ttf");
+                                mJournalViewHolder.entryDesc.setTypeface(typeface);
+                                mJournalViewHolder.entryTitle.setTypeface(typeface);
+                                mJournalViewHolder.entryTime.setTypeface(typeface);
+                                break;
+                            case "4":
+                                typeface = get("font/work_sans.ttf", mContext);
+                                mJournalViewHolder.entryDesc.setTypeface(typeface);
+                                mJournalViewHolder.entryTitle.setTypeface(typeface);
+                                mJournalViewHolder.entryTime.setTypeface(typeface);
+                                break;
+                            case "5":
+                                typeface = get("font/noto_serif.ttf", mContext);
+                                mJournalViewHolder.entryDesc.setTypeface(typeface);
+                                mJournalViewHolder.entryTitle.setTypeface(typeface);
+                                mJournalViewHolder.entryTime.setTypeface(typeface);
+                        }
+                    }
+                };
+        sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener);
+
 
         // Set values
         journalViewHolder.entryDesc.setText(description);
@@ -103,6 +159,18 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
             entryTime = itemView.findViewById(R.id.journal_item_time);
             entryDesc = itemView.findViewById(R.id.journal_item_desc);
             entryTitle = itemView.findViewById(R.id.journal_item_title);
+//            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+//
+//            SharedPreferences.OnSharedPreferenceChangeListener prefListener =
+//                    new SharedPreferences.OnSharedPreferenceChangeListener() {
+//                        @Override
+//                        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+//                            Log.v("JournalAdapter", s);
+//                        }
+//                    };
+//            sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener);
+
+
             itemView.setOnClickListener(this);
         }
 
@@ -117,4 +185,19 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
         }
     }
 
+
+    private Hashtable<String, Typeface> fontCache = new Hashtable<>();
+
+    public Typeface get(String name, Context context) {
+        Typeface tf = fontCache.get(name);
+        if (tf == null) {
+            try {
+                tf = Typeface.createFromAsset(context.getAssets(), name);
+            } catch (Exception e)  {
+                return null;
+            }
+            fontCache.put(name, tf);
+        }
+        return tf;
+    }
 }

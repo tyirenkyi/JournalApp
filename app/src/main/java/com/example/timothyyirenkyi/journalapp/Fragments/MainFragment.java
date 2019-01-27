@@ -3,7 +3,9 @@ package com.example.timothyyirenkyi.journalapp.Fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +29,7 @@ import com.example.timothyyirenkyi.journalapp.R;
 
 import java.util.List;
 
-public class MainFragment extends Fragment implements JournalAdapter.ListItemClickListener{
-
+public class MainFragment extends Fragment implements JournalAdapter.ListItemClickListener {
     private JournalAdapter journalAdapter;
     private RecyclerView recyclerView;
     private TextView emptyView;
@@ -35,6 +37,10 @@ public class MainFragment extends Fragment implements JournalAdapter.ListItemCli
     private JournalDatabase journalDatabase;
 
     FloatingActionButton addButton;
+
+    SharedPreferences.OnSharedPreferenceChangeListener prefListener;
+
+    private static final String LOG_TAG = MainFragment.class.getSimpleName();
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -65,6 +71,16 @@ public class MainFragment extends Fragment implements JournalAdapter.ListItemCli
                 startActivity(intent);
             }
         });
+        prefListener =
+                new SharedPreferences.OnSharedPreferenceChangeListener() {
+                    @Override
+                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                        Log.v(LOG_TAG, s);
+                    }
+                };
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener);
+
 
         journalAdapter = new JournalAdapter(getContext(), this);
         recyclerView.setAdapter(journalAdapter);
