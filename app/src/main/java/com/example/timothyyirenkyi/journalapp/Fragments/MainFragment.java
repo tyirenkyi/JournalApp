@@ -2,6 +2,7 @@ package com.example.timothyyirenkyi.journalapp.Fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +34,7 @@ public class MainFragment extends Fragment implements JournalAdapter.ListItemCli
     private RecyclerView recyclerView;
     private TextView emptyView;
 
+    private Context context;
     private JournalDatabase journalDatabase;
 
     FloatingActionButton addButton;
@@ -59,10 +60,14 @@ public class MainFragment extends Fragment implements JournalAdapter.ListItemCli
 
         emptyView.setVisibility(View.GONE);
 
+        context = getContext();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setHasFixedSize(true);
+
+        journalAdapter = new JournalAdapter(getContext(), this);
+        recyclerView.setAdapter(journalAdapter);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,15 +80,11 @@ public class MainFragment extends Fragment implements JournalAdapter.ListItemCli
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     @Override
                     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                        Log.v(LOG_TAG, s);
+                        recyclerView.setAdapter(journalAdapter);
                     }
                 };
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener);
-
-
-        journalAdapter = new JournalAdapter(getContext(), this);
-        recyclerView.setAdapter(journalAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override

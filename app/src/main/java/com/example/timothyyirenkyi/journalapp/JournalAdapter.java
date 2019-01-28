@@ -33,7 +33,7 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
 
     final private ListItemClickListener mOnClickListener;
 
-    SharedPreferences.OnSharedPreferenceChangeListener prefListener;
+    private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
 
 
     public interface ListItemClickListener {
@@ -68,53 +68,68 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
         JournalEntry journalEntry = mJournalEntries.get(i);
         String description = journalEntry.getDescription();
         String title = journalEntry.getTitle();
-        String updatedAt = dateFormat.format(journalEntry.getUpdatedAt());
+        final String updatedAt = dateFormat.format(journalEntry.getUpdatedAt());
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String font_size = sharedPreferences.getString("font_size_list", "1");
+        switch (font_size) {
+            case "1":
+                journalViewHolder.entryDesc.setTextSize(16f);
+                journalViewHolder.entryTitle.setTextSize(16f);
+                journalViewHolder.entryTime.setTextSize(16f);
+                break;
+            case "2":
+                journalViewHolder.entryTime.setTextSize(20f);
+                journalViewHolder.entryDesc.setTextSize(20f);
+                journalViewHolder.entryTitle.setTextSize(20f);
+                break;
+            case "3":
+                journalViewHolder.entryTitle.setTextSize(25f);
+                journalViewHolder.entryDesc.setTextSize(25f);
+                journalViewHolder.entryTime.setTextSize(25f);
+                break;
+            case "4":
+                journalViewHolder.entryTime.setTextSize(30f);
+                journalViewHolder.entryDesc.setTextSize(30f);
+                journalViewHolder.entryTitle.setTextSize(30f);
+                break;
+        }
 
-        prefListener =
-                new SharedPreferences.OnSharedPreferenceChangeListener() {
-                    @Override
-                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                        Log.v("JournalAdapter", s);
-                        String fontFamilyListPref = sharedPreferences.getString("font_list", "1");
-                        Typeface typeface;
-                        final JournalViewHolder mJournalViewHolder = journalViewHolder;
-                        switch (fontFamilyListPref) {
-                            case "1":
-                                typeface = Typeface.createFromAsset(mContext.getAssets(), "font/raleway.ttf");
-                                mJournalViewHolder.entryDesc.setTypeface(typeface);
-                                mJournalViewHolder.entryTitle.setTypeface(typeface);
-                                mJournalViewHolder.entryTime.setTypeface(typeface);
-                                Log.v("JournalAdapter", "raleway");
-                                break;
-                            case "2":
-                                typeface = Typeface.createFromAsset(mContext.getAssets(), "font/nunito.ttf");
-                                mJournalViewHolder.entryDesc.setTypeface(typeface);
-                                mJournalViewHolder.entryTitle.setTypeface(typeface);
-                                mJournalViewHolder.entryTime.setTypeface(typeface);
-                                break;
-                            case "3":
-                                typeface = Typeface.createFromAsset(mContext.getAssets(), "font/roboto.ttf");
-                                mJournalViewHolder.entryDesc.setTypeface(typeface);
-                                mJournalViewHolder.entryTitle.setTypeface(typeface);
-                                mJournalViewHolder.entryTime.setTypeface(typeface);
-                                break;
-                            case "4":
-                                typeface = get("font/work_sans.ttf", mContext);
-                                mJournalViewHolder.entryDesc.setTypeface(typeface);
-                                mJournalViewHolder.entryTitle.setTypeface(typeface);
-                                mJournalViewHolder.entryTime.setTypeface(typeface);
-                                break;
-                            case "5":
-                                typeface = get("font/noto_serif.ttf", mContext);
-                                mJournalViewHolder.entryDesc.setTypeface(typeface);
-                                mJournalViewHolder.entryTitle.setTypeface(typeface);
-                                mJournalViewHolder.entryTime.setTypeface(typeface);
-                        }
-                    }
-                };
-        sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener);
+        String fontFamilyListPref = sharedPreferences.getString("font_list", "1");
+        Typeface typeface;
+        switch (fontFamilyListPref) {
+            case "1":
+                typeface = get("font/raleway.ttf", mContext);
+                journalViewHolder.entryDesc.setTypeface(typeface);
+                journalViewHolder.entryTitle.setTypeface(typeface);
+                journalViewHolder.entryTime.setTypeface(typeface);
+                Log.v("JournalAdapter", "raleway");
+                break;
+            case "2":
+                typeface = get("font/nunito.ttf", mContext);
+                journalViewHolder.entryDesc.setTypeface(typeface);
+                journalViewHolder.entryTitle.setTypeface(typeface);
+                journalViewHolder.entryTime.setTypeface(typeface);
+                break;
+            case "3":
+                typeface = get("font/roboto.ttf", mContext);
+                journalViewHolder.entryDesc.setTypeface(typeface);
+                journalViewHolder.entryTitle.setTypeface(typeface);
+                journalViewHolder.entryTime.setTypeface(typeface);
+                break;
+            case "4":
+                typeface = get("font/work_sans.ttf", mContext);
+                journalViewHolder.entryDesc.setTypeface(typeface);
+                journalViewHolder.entryTitle.setTypeface(typeface);
+                journalViewHolder.entryTime.setTypeface(typeface);
+                break;
+            case "5":
+                typeface = get("font/noto_serif.ttf", mContext);
+                journalViewHolder.entryDesc.setTypeface(typeface);
+                journalViewHolder.entryTitle.setTypeface(typeface);
+                journalViewHolder.entryTime.setTypeface(typeface);
+                break;
+        }
 
 
         // Set values
@@ -159,23 +174,8 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
             entryTime = itemView.findViewById(R.id.journal_item_time);
             entryDesc = itemView.findViewById(R.id.journal_item_desc);
             entryTitle = itemView.findViewById(R.id.journal_item_title);
-//            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-//
-//            SharedPreferences.OnSharedPreferenceChangeListener prefListener =
-//                    new SharedPreferences.OnSharedPreferenceChangeListener() {
-//                        @Override
-//                        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-//                            Log.v("JournalAdapter", s);
-//                        }
-//                    };
-//            sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener);
-
 
             itemView.setOnClickListener(this);
-        }
-
-        void bind(int listIndex) {
-            entryTitle.setText(String.valueOf(listIndex));
         }
 
         @Override
