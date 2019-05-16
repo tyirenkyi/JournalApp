@@ -10,8 +10,8 @@
         android:id="@+id/calendar_button"
         android:icon="@drawable/ic_event_note_black_24dp"/>
 
-    <item
-        android:title="@string/media_fragment"
-        android:id="@+id/media_button"
-        android:icon="@drawable/ic_perm_media_black_24dp"/>
+    <!--<item-->
+        <!--android:title="@string/media_fragment"-->
+        <!--android:id="@+id/media_button"-->
+        <!--android:icon="@drawable/ic_perm_media_black_24dp"/>-->
 </menu>

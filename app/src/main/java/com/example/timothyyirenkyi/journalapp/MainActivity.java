@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
                                 .attach(calendarFragment)
                                 .commit();
                         break;
-                    case R.id.media_button:
-                        fragmentManager.beginTransaction()
-                                .detach(mainFragment)
-                                .detach(calendarFragment)
-                                .attach(mediaFragment)
-                                .commit();
-                        break;
+//                    case R.id.media_button:
+//                        fragmentManager.beginTransaction()
+//                                .detach(mainFragment)
+//                                .detach(calendarFragment)
+//                                .attach(mediaFragment)
+//                                .commit();
+//                        break;
                 }
                 return true;
             }
